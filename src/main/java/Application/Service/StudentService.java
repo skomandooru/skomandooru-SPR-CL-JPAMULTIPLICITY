@@ -57,9 +57,18 @@ public class StudentService {
      * @param studentId the id of a persisted student
      * @param classroom a persisted, existing classroom passed into this method
      */
-    public void assignClassroomToStudent(long studentId, Classroom classroom){
-
-    }
+    public void assignClassroomToStudent(long studentId, Classroom classroom) {
+        // Retrieve the student entity by Id.
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+    
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            student.setClassroom(classroom);
+    
+            // Save the updated student entity to the database.
+            studentRepository.save(student);
+        }
+    }    
 
     /**
      * TODO: Provided the Id of an already existing student entity, return its assigned classroom by retrieving
@@ -68,17 +77,34 @@ public class StudentService {
      * @param studentId Id of a persisted, existing student entity
      * @return the Classroom of the student
      */
-    public Classroom getClassroomOfStudent(long studentId){
-        return null;
-    }
-
+    public Classroom getClassroomOfStudent(long studentId) {
+        // Retrieve the student entity by Id.
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+    
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            return student.getClassroom();
+        }
+    
+        return null; // Return null if the student with the provided Id is not found.
+    }    
+    
     /**
      * TODO: Provided the Id of an already existing student entity, unassign its classroom by setting the student
      * entity's classroom field to null. Don't forget to save the changes made to your student entity via the
      * studentRepository so that the update is sent to the database.
      * @param studentId Id of a persisted, existing student entity
      */
-    public void unassignClassroomOfStudent(long studentId){
-
-    }
+    public void unassignClassroomOfStudent(long studentId) {
+        // Retrieve the student entity by Id.
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+    
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            student.setClassroom(null);
+    
+            // Save the updated student entity to the database.
+            studentRepository.save(student);
+        }
+    }    
 }
